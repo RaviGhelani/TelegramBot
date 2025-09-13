@@ -1,8 +1,8 @@
-import TelegramBot from 'node-telegram-bot-api';
-import Link from '../models/Link.js';
+const TelegramBot = require("node-telegram-bot-api");
+const Link = require("../models/Link.js");
 
-export const startBot = (token) => {
-  const bot = new TelegramBot(token, { polling: true });
+const initBot = (token) => {
+  const bot = new TelegramBot(token); // no polling
 
   bot.onText(/\/start/, async (msg) => {
     const chatId = msg.chat.id;
@@ -12,15 +12,13 @@ export const startBot = (token) => {
       return bot.sendMessage(chatId, "No links are available at the moment.");
     }
 
-    // Build inline keyboard dynamically from DB
-    const keyboard = links.map(link => [
-      { text: `🔗 ${link.title}`, url: link.url }
-    ]);
-
+    const keyboard = links.map((link) => [{ text: `🔗 ${link.title}`, url: link.url }]);
     bot.sendMessage(chatId, "👋 Welcome! Here are our links:", {
-      reply_markup: { inline_keyboard: keyboard }
+      reply_markup: { inline_keyboard: keyboard },
     });
   });
 
   return bot;
 };
+
+module.exports = { initBot };
