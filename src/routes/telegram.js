@@ -5,6 +5,8 @@ const router = express.Router();
 module.exports = (bot) => {
   // Telegram will POST all updates here
   router.post("/", (req, res) => {
+    console.log("Received update:"); // Log the incoming update
+    
     bot.processUpdate(req.body); // Pass the update to the bot
     res.sendStatus(200); // Respond with HTTP 200 status
   });
