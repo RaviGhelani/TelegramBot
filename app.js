@@ -9,26 +9,39 @@ const { initBot } = require("./src/bot/index.js");
 const app = express();
 app.use(express.json());
 
+// Connect to MongoDB
 connectDB();
+
+// Initialize the bot
 const bot = initBot(
   process.env.BOT_TOKEN,
   process.env.ADMIN_IDS
     ? process.env.ADMIN_IDS.split(",").map((id) => id.trim())
     : []
-); // Initialize the bot here
+);
 
+// Define routes
 app.use("/admin", adminRoutes);
 app.use("/api/telegram", telegramRoutes(bot)); // Pass the bot instance to the route
 
+// Root route
 app.get("/", (req, res) => res.send("✅ Telegram Bot API is running"));
 
+// Start the server
 const PORT = process.env.PORT || 3000;
-const SERVER_URL = process.env.SERVER_URL || 3000;
+const SERVER_URL = process.env.SERVER_URL;
 
 app.listen(PORT, async () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 
-  const webhookUrl = `${SERVER_URL}/api/telegram`;
-  await bot.setWebHook(webhookUrl);
-  console.log("🔗 Webhook set to:", webhookUrl);
+  try {
+    const webhookUrl = `${SERVER_URL}/api/telegram`;
+    await bot.setWebHook(webhookUrl);
+    console.log("🔗 Webhook set to:", webhookUrl);
+  } catch (err) {
+    console.error("❌ Failed to set webhook:", err.message);
+  }
 });
+
+// Export the app for Railway compatibility
+module.exports = app;
