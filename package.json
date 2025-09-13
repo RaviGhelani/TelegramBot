@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@vendia/serverless-express": "^4.12.6",
     "axios": "^1.12.1",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
