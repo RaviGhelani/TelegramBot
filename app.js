@@ -10,7 +10,12 @@ const app = express();
 app.use(express.json());
 
 connectDB();
-const bot = initBot(process.env.BOT_TOKEN); // Initialize the bot here
+const bot = initBot(
+  process.env.BOT_TOKEN,
+  process.env.ADMIN_IDS
+    ? process.env.ADMIN_IDS.split(",").map((id) => id.trim())
+    : []
+); // Initialize the bot here
 
 app.use("/admin", adminRoutes);
 app.use("/api/telegram", telegramRoutes(bot)); // Pass the bot instance to the route
@@ -18,11 +23,12 @@ app.use("/api/telegram", telegramRoutes(bot)); // Pass the bot instance to the r
 app.get("/", (req, res) => res.send("✅ Telegram Bot API is running"));
 
 const PORT = process.env.PORT || 3000;
+const SERVER_URL = process.env.SERVER_URL || 3000;
 
 app.listen(PORT, async () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 
-  const webhookUrl = `https://cp3tcrsh-8000.inc1.devtunnels.ms/api/telegram`;
+  const webhookUrl = `${SERVER_URL}/api/telegram`;
   await bot.setWebHook(webhookUrl);
   console.log("🔗 Webhook set to:", webhookUrl);
 });
