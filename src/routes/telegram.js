@@ -11,6 +11,7 @@ module.exports = (bot) => {
 
   router.get("/", (req, res) => {
     console.log('Working');
+    res?.send("✅ Telegram Bot API is running");
     
   });
 
