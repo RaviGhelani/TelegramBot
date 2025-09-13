@@ -9,5 +9,10 @@ module.exports = (bot) => {
     res.sendStatus(200); // Respond with HTTP 200 status
   });
 
+  router.get("/", (req, res) => {
+    console.log('Working');
+    
+  });
+
   return router;
 };
