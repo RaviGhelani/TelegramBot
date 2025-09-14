@@ -31,9 +31,13 @@ const initBot = (token, ADMIN_IDS) => {
           { text: `📥 ${file.title}`, url: file.fileUrl },
         ]);
 
-        await bot.sendMessage(chatId, message, {
+        bot.sendMessage(chatId, message, {
           parse_mode: "Markdown",
           reply_markup: { inline_keyboard: keyboard },
+        });
+
+        content.files.map(async (link) => {
+          await bot.sendDocument(chatId, link.fileUrl, { caption: link.title });
         });
         return;
       } catch (error) {
@@ -45,20 +49,7 @@ const initBot = (token, ADMIN_IDS) => {
       }
     }
 
-    // If no access command, show general links
-    const links = await Link.find();
-
-    if (links.length === 0) {
-      return bot.sendMessage(chatId, "No links are available at the moment.");
-    }
-
-    // const keyboard = links.map((link) => [
-    //   { text: `🔗 ${link.title}`, url: link.url },
-    // ]);
-
-    links.map((link) => {
-      bot.sendDocument(chatId, link.url, { caption: link.title });
-    });
+    bot.sendMessage(chatId, "❌ Something went wrong with this command.");
   });
 
   // bot.onText(/\/addlink (.+)/, async (msg, match) => {
