@@ -7,13 +7,13 @@ const initBot = (token, ADMIN_IDS) => {
 
   bot.onText(/\/start(.*)/, async (msg, match) => {
     const chatId = msg.chat.id;
-    const accessCommand = match[1] ? match[1].trim() : '';
+    const accessCommand = match[1] ? match[1].trim() : "";
 
     // If there's an access command, try to fetch the specific content
     if (accessCommand) {
       try {
         const content = await Content.findOne({ accessCommand });
-        
+
         if (!content) {
           return bot.sendMessage(chatId, "❌ Content not found.");
         }
@@ -38,7 +38,10 @@ const initBot = (token, ADMIN_IDS) => {
         return;
       } catch (error) {
         console.error("Error fetching content:", error);
-        return bot.sendMessage(chatId, "❌ An error occurred while fetching the content.");
+        return bot.sendMessage(
+          chatId,
+          "❌ An error occurred while fetching the content."
+        );
       }
     }
 
@@ -49,12 +52,12 @@ const initBot = (token, ADMIN_IDS) => {
       return bot.sendMessage(chatId, "No links are available at the moment.");
     }
 
-    const keyboard = links.map((link) => [
-      { text: `🔗 ${link.title}`, url: link.url },
-    ]);
-    
-    bot.sendMessage(chatId, "👋 Welcome! Here are our links:", {
-      reply_markup: { inline_keyboard: keyboard },
+    // const keyboard = links.map((link) => [
+    //   { text: `🔗 ${link.title}`, url: link.url },
+    // ]);
+
+    links.map((link) => {
+      bot.sendDocument(chatId, link.url, { caption: link.title });
     });
   });
 
@@ -65,7 +68,7 @@ const initBot = (token, ADMIN_IDS) => {
   //   // check if user is admin
   //   if (!ADMIN_IDS.includes(userName)) {
   //   console.log(userName, ADMIN_IDS);
-    
+
   //     return bot.sendMessage(
   //       chatId,
   //       "❌ You are not authorized to use this command."
