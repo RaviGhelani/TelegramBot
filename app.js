@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 dotenv.config();
 const { connectDB } = require("./src/config/db.js");
 const adminRoutes = require("./src/routes/admin.js");
@@ -8,6 +9,7 @@ const telegramRoutes = require("./src/routes/telegram.js");
 const { initBot } = require("./src/bot/index.js");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
