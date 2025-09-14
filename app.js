@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const { connectDB } = require("./src/config/db.js");
 const adminRoutes = require("./src/routes/admin.js");
+const contentRoutes = require("./src/routes/content.js");
 const telegramRoutes = require("./src/routes/telegram.js");
 const { initBot } = require("./src/bot/index.js");
 
@@ -22,6 +23,7 @@ const bot = initBot(
 
 // Define routes
 app.use("/admin", adminRoutes);
+app.use("/api/content", contentRoutes);
 app.use("/api/telegram", telegramRoutes(bot)); // Pass the bot instance to the route
 
 // Root route

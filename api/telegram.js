@@ -8,9 +8,13 @@ const bot = initBot(
 );
 
 const setWebhook = async () => {
-  const webhookUrl = `${process.env.SERVER_URL}/api/telegram`;
-  await bot.setWebHook(webhookUrl);
-  console.log("🔗 Webhook set to:", webhookUrl);
+  try {
+    const webhookUrl = `${process.env.SERVER_URL}/api/telegram`;
+    await bot.setWebhook(webhookUrl);
+    console.log("🔗 Webhook set to:", webhookUrl);
+  } catch (error) {
+    console.error("Webhook setup error:", error);
+  }
 };
 
 setWebhook(); // Set the webhook when the function is initialized
