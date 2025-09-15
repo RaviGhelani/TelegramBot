@@ -26,19 +26,21 @@ const initBot = (token, ADMIN_IDS) => {
         message += `Type: ${content.type}\n\n`;
         message += "Available files:\n";
 
-        // Create keyboard with file links
-        const keyboard = content.files.map((file) => [
-          { text: `📥 ${file.title}`, url: file.fileUrl },
-        ]);
+        // // Create keyboard with file links
+        // const keyboard = content.files.map((file) => [
+        //   { text: `📥 ${file.title}`, url: file.fileUrl },
+        // ]);
 
-        bot.sendMessage(chatId, message, {
-          parse_mode: "Markdown",
-          reply_markup: { inline_keyboard: keyboard },
-        });
+        bot.sendMessage(chatId, message);
 
-        content.files.map(async (link) => {
+        function sleep(ms) {
+          return new Promise((resolve) => setTimeout(resolve, ms));
+        }
+
+        for (const link of content.files) {
           await bot.sendDocument(chatId, link.fileUrl, { caption: link.title });
-        });
+          await sleep(1000); // wait 1 second between files
+        }
         return;
       } catch (error) {
         console.error("Error fetching content:", error);
