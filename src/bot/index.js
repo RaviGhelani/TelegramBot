@@ -33,14 +33,9 @@ const initBot = (token, ADMIN_IDS) => {
 
         bot.sendMessage(chatId, message);
 
-        function sleep(ms) {
-          return new Promise((resolve) => setTimeout(resolve, ms));
-        }
-
-        for (const link of content.files) {
+        content.files.map(async (link) => {
           await bot.sendDocument(chatId, link.fileUrl, { caption: link.title });
-          await sleep(1000); // wait 1 second between files
-        }
+        });
         return;
       } catch (error) {
         console.error("Error fetching content:", error);
