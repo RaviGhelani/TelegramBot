@@ -13,7 +13,7 @@ const setWebhook = async () => {
     await bot.setWebhook(webhookUrl);
     console.log("🔗 Webhook set to:", webhookUrl);
   } catch (error) {
-    console.error("Webhook setup error:", error);
+    // console.error("Webhook setup error:", error);
   }
 };
 

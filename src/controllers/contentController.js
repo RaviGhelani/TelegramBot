@@ -48,7 +48,7 @@ const createContent = async (req, res) => {
         error: "Access command must be unique" 
       });
     }
-    console.error("Create content error:", err);
+    // console.error("Create content error:", err);
     res.status(500).json({ 
       error: "Failed to create content" 
     });
@@ -93,7 +93,7 @@ const getAllContent = async (req, res) => {
       }
     });
   } catch (err) {
-    console.error("Get all content error:", err);
+    // console.error("Get all content error:", err);
     res.status(500).json({ 
       error: "Failed to fetch content" 
     });
@@ -118,7 +118,7 @@ const getContentById = async (req, res) => {
       data: content
     });
   } catch (err) {
-    console.error("Get content by ID error:", err);
+    // console.error("Get content by ID error:", err);
     res.status(500).json({ 
       error: "Failed to fetch content" 
     });
@@ -143,7 +143,7 @@ const getContentByCommand = async (req, res) => {
       data: content
     });
   } catch (err) {
-    console.error("Get content by command error:", err);
+    // console.error("Get content by command error:", err);
     res.status(500).json({ 
       error: "Failed to fetch content" 
     });
@@ -202,7 +202,7 @@ const updateContent = async (req, res) => {
         error: "Access command must be unique" 
       });
     }
-    console.error("Update content error:", err);
+    // console.error("Update content error:", err);
     res.status(500).json({ 
       error: "Failed to update content" 
     });
@@ -228,7 +228,7 @@ const deleteContent = async (req, res) => {
       data: deletedContent
     });
   } catch (err) {
-    console.error("Delete content error:", err);
+    // console.error("Delete content error:", err);
     res.status(500).json({ 
       error: "Failed to delete content" 
     });
@@ -263,7 +263,7 @@ const addFileToContent = async (req, res) => {
       data: content
     });
   } catch (err) {
-    console.error("Add file to content error:", err);
+    // console.error("Add file to content error:", err);
     res.status(500).json({ 
       error: "Failed to add file to content" 
     });
@@ -299,7 +299,7 @@ const removeFileFromContent = async (req, res) => {
       data: content
     });
   } catch (err) {
-    console.error("Remove file from content error:", err);
+    // console.error("Remove file from content error:", err);
     res.status(500).json({ 
       error: "Failed to remove file from content" 
     });
