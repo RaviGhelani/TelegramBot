@@ -34,26 +34,7 @@ const initBot = (token, ADMIN_IDS) => {
         bot.sendMessage(chatId, message);
 
         content.files.map(async (link) => {
-          try {
-            // Optionally, check if the URL is a public http(s) link
-            if (!/^https?:\/\//i.test(link.fileUrl)) {
-              throw new Error("Invalid or non-public URL");
-            }
-
-            await bot.sendDocument(chatId, link.fileUrl, {
-              caption: link.title,
-            });
-          } catch (err) {
-            console.error(
-              "Failed to send document:",
-              link.fileUrl,
-              err?.message
-            );
-            await bot.sendMessage(
-              chatId,
-              `⚠️ Could not send file: ${link.title}. File might be private or unavailable.`
-            );
-          }
+          await bot.sendDocument(chatId, link.fileUrl, { caption: link.title });
         });
         return;
       } catch (error) {
